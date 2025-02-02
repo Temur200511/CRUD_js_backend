@@ -3,90 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD App</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
-<body class="bg-gray-100 p-4">
-    <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-xl font-bold mb-4">User Form</h2>
-        <input id="name" type="text" placeholder="Name" class="w-full mb-2 p-2 border rounded">
-        <input id="email" type="email" placeholder="Email" class="w-full mb-2 p-2 border rounded">
-        <input id="age" type="number" placeholder="Age" class="w-full mb-2 p-2 border rounded">
-        <button onclick="submitUser()" id="submit-btn" class="w-full bg-blue-500 text-white p-2 rounded">Submit</button>
-    </div>
+
+<body>
     
-    <div class="max-w-lg mx-auto mt-4 bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-xl font-bold mb-4">User List</h2>
-        <ul id="user-list" class="space-y-2"></ul>
+    <div class="container">
+        <h1>Foydalanuvchilar ro'yxati</h1>
+
+        <form id="form">
+            <input type="hidden" id="id" name="id">
+
+            <input type="text" id="name" placeholder="Ism" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="number" id="age" placeholder="Yosh" required min="0">
+            <button type="submit">Qo'shish</button>
+        </form>
+
+        <button id="openModalBtn">Foydalanuvchi qo'shish</button>
+
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <h2>Yangi foydalanuvchi qo'shish / Tahrirlash</h2>
+                <form id="form">
+                    <input type="hidden" id="userId">
+                    <input type="text" id="name" placeholder="Ism" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="number" id="age" placeholder="Yosh" required min="0">
+                    <button type="submit">Qo'shish</button>
+                </form>
+                <span class="close-btn" id="closeModalBtn">&times;</span> 
+            </div>
+        </div>
+        
+        <div class="line"></div>
+
+        <div class="table-container">
+            <table>
+                <div class="table-loading" id="table-loading" style="display: none;">
+                    <div class="lds-dual-ring"></div>
+                </div>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Ism</th>
+                        <th>Email</th>
+                        <th>Yosh</th>
+                        <th>Amallar</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
     </div>
-    
-    <script>
-        let users = [];
-        let editingUserId = null;
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="./app.js"></script>
 
-        function submitUser() {
-            let name = document.getElementById('name').value;
-            let email = document.getElementById('email').value;
-            let age = document.getElementById('age').value;
 
-            if (name && email && age) {
-                if (editingUserId !== null) {
-                    // Update existing user
-                    let user = users.find(user => user.id === editingUserId);
-                    user.name = name;
-                    user.email = email;
-                    user.age = age;
-                    editingUserId = null;
-                    document.getElementById('submit-btn').innerText = "Submit";
-                } else {
-                    // Add new user
-                    let user = { id: Date.now(), name, email, age };
-                    users.push(user);
-                }
-                renderUsers();
-                clearForm();
-            }
-        }
 
-        function renderUsers() {
-            let list = document.getElementById('user-list');
-            list.innerHTML = '';
-            users.forEach(user => {
-                let li = document.createElement('li');
-                li.classList.add("p-2", "border", "rounded", "flex", "justify-between", "items-center");
-                li.innerHTML = `<strong>${user.name}</strong> (${user.email}, ${user.age} years)
-                <button onclick="editUser(${user.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</button>
-                <button onclick="deleteUser(${user.id})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>`;
-                list.appendChild(li);
-            });
-        }
 
-        function deleteUser(id) {
-            users = users.filter(user => user.id !== id);
-            renderUsers();
-        }
-
-        function editUser(id) {
-            let user = users.find(user => user.id === id);
-            if (user) {
-                document.getElementById('name').value = user.name;
-                document.getElementById('email').value = user.email;
-                document.getElementById('age').value = user.age;
-                editingUserId = id;
-                document.getElementById('submit-btn').innerText = "Update";
-            }
-        }
-
-        function clearForm() {
-            document.getElementById('name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('age').value = '';
-        }
-
-    </script>
-
-    <script src="server.js">
-
-    </script>
+  
 </body>
 </html>
