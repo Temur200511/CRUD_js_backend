@@ -7,16 +7,17 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background: #f4f4f4;
+  background: #ffc107;
   display: flex;
   justify-content: center;
   align-items: start;
   height: calc(100vh - 20px);
   margin-top: 10px;
+
 }
 
 .container {
-  background: #fff;
+  background: #e3e3e3;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -67,7 +68,7 @@ form input:focus {
 form button {
   flex: 0;
   padding: 10px;
-  background: #28a745;
+  background: #ccc;
   color: white;
   border: none;
   cursor: pointer;
@@ -84,7 +85,7 @@ form button:hover {
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background: #28a745;
+  background: #ccc;
   color: white;
   border: none;
   cursor: pointer;
